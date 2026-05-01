@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Theme Settings"
+        android:text="@string/theme_settings"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:attr/textColorPrimary"
-            android:text="Light Mode"
+            android:text="@string/light_mode"
             android:paddingVertical="12dp" />
 
         <RadioButton
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:attr/textColorPrimary"
-            android:text="Dark Mode"
+            android:text="@string/dark_mode"
             android:paddingVertical="12dp" />
 
         <RadioButton
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:attr/textColorPrimary"
-            android:text="System Default"
+            android:text="@string/system_default"
             android:paddingVertical="12dp" />
     </RadioGroup>
 </LinearLayout>
