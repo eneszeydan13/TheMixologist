@@ -38,7 +38,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
     }
 
     // Standard hooks for child fragments
-    abstract fun initViews()
+    open fun initViews(){}
 
     open fun observeState() {
         // Here you could observe BaseViewModel events generically

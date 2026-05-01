@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,23 +12,28 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.themixologist.R
+import com.example.themixologist.core.base.BaseFragment
 import com.example.themixologist.databinding.FragmentCocktailDetailsBinding
 import com.example.themixologist.databinding.ItemIngredientBinding
 import com.example.themixologist.databinding.ItemInstructionBinding
-import com.example.themixologist.feature.cocktail_details.CocktailDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.getValue
 
 @AndroidEntryPoint
-class CocktailDetailsFragment : Fragment() {
+class CocktailDetailsFragment : BaseFragment<FragmentCocktailDetailsBinding, CocktailDetailsViewModel>(
+    R.layout.fragment_cocktail_list
+) {
 
     // Hilt provides the ViewModel (which already grabbed the ID via SavedStateHandle!)
-    private val viewModel: CocktailDetailsViewModel by viewModels()
+    override val viewModel: CocktailDetailsViewModel by viewModels()
+    override fun getViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = FragmentCocktailDetailsBinding.inflate(inflater, container, false)
 
     // ViewBinding setup
     private var _binding: FragmentCocktailDetailsBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +62,7 @@ class CocktailDetailsFragment : Fragment() {
         }
     }
 
-    private fun observeState() {
+    override fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             // repeatOnLifecycle ensures we only collect data when the UI is visible
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
