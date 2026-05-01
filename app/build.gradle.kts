@@ -54,7 +54,7 @@ dependencies {
     implementation(libs.gson.lib)
     implementation(libs.bundles.retrofit)
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.glide.lib)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.room.runtime)

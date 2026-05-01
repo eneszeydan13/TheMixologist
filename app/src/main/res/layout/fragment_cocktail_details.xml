@@ -108,14 +108,17 @@
                     app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <LinearLayout
-                    android:id="@+id/llIngredientsContainer"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvIngredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="8dp"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/tvIngredientsTitle" />
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tvIngredientsTitle"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_ingredient" />
 
                 <View
                     android:id="@+id/divider"
@@ -124,7 +127,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="16dp"
                     android:background="@color/divider_color"
-                    app:layout_constraintTop_toBottomOf="@id/llIngredientsContainer" />
+                    app:layout_constraintTop_toBottomOf="@id/rvIngredients" />
 
                 <TextView
                     android:id="@+id/tvInstructionsTitle"
@@ -140,14 +143,17 @@
                     app:layout_constraintTop_toBottomOf="@id/divider"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <LinearLayout
-                    android:id="@+id/llInstructionsContainer"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvInstructions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="8dp"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/tvInstructionsTitle" />
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tvInstructionsTitle"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_instruction" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

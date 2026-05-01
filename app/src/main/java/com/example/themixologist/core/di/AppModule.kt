@@ -3,6 +3,8 @@ package com.example.themixologist.core.di
 import com.example.themixologist.data.remote.CocktailApi
 import com.example.themixologist.data.repository.CocktailRepository
 import com.example.themixologist.data.repository.CocktailRepositoryImpl
+import com.example.themixologist.data.repository.FavoriteRepositoryImpl
+import com.example.themixologist.domain.repository.FavoriteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,5 +35,13 @@ class AppModule {
     @Singleton
     fun provideCocktailRepository(api: CocktailApi): CocktailRepository {
         return CocktailRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteRepository(
+        dao: com.example.themixologist.data.local.FavoriteCocktailDao
+    ): FavoriteRepository {
+        return FavoriteRepositoryImpl(dao)
     }
 }

@@ -4,9 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.themixologist.core.base.BaseViewModel
 import com.example.themixologist.core.util.Resource
-import com.example.themixologist.data.local.FavoriteCocktailDao
-import com.example.themixologist.data.local.FavoriteCocktailEntity
 import com.example.themixologist.data.repository.CocktailRepository
+import com.example.themixologist.domain.repository.FavoriteRepository
 import com.example.themixologist.domain.model.Cocktail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CocktailDetailsViewModel @Inject constructor(
     private val repository: CocktailRepository,
-    private val dao: FavoriteCocktailDao,
+    private val favoriteRepository: FavoriteRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
     
@@ -43,7 +42,7 @@ class CocktailDetailsViewModel @Inject constructor(
 
     private fun observeFavoriteStatus(id: String) {
         viewModelScope.launch {
-            dao.observeIsFavorite(id).collect { isFav ->
+            favoriteRepository.observeIsFavorite(id).collect { isFav ->
                 _state.value = _state.value.copy(isFavorite = isFav)
             }
         }
@@ -68,21 +67,7 @@ class CocktailDetailsViewModel @Inject constructor(
         val isFav = _state.value.isFavorite
         
         viewModelScope.launch {
-            if (isFav) {
-                dao.deleteFavorite(FavoriteCocktailEntity(
-                    id = cocktail.id,
-                    name = cocktail.name,
-                    imageUrl = cocktail.imageUrl,
-                    category = cocktail.category
-                ))
-            } else {
-                dao.insertFavorite(FavoriteCocktailEntity(
-                    id = cocktail.id,
-                    name = cocktail.name,
-                    imageUrl = cocktail.imageUrl,
-                    category = cocktail.category
-                ))
-            }
+            favoriteRepository.toggleFavorite(cocktail, isFav)
         }
     }
 }

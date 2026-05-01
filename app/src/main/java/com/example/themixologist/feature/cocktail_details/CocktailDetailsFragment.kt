@@ -14,16 +14,14 @@ import com.bumptech.glide.Glide
 import com.example.themixologist.R
 import com.example.themixologist.core.base.BaseFragment
 import com.example.themixologist.databinding.FragmentCocktailDetailsBinding
-import com.example.themixologist.databinding.ItemIngredientBinding
-import com.example.themixologist.databinding.ItemInstructionBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 @AndroidEntryPoint
-class CocktailDetailsFragment : BaseFragment<FragmentCocktailDetailsBinding, CocktailDetailsViewModel>(
-    R.layout.fragment_cocktail_list
-) {
+class CocktailDetailsFragment :
+    BaseFragment<FragmentCocktailDetailsBinding, CocktailDetailsViewModel>(
+        R.layout.fragment_cocktail_list
+    ) {
 
     // Hilt provides the ViewModel (which already grabbed the ID via SavedStateHandle!)
     override val viewModel: CocktailDetailsViewModel by viewModels()
@@ -32,23 +30,15 @@ class CocktailDetailsFragment : BaseFragment<FragmentCocktailDetailsBinding, Coc
         container: ViewGroup?
     ) = FragmentCocktailDetailsBinding.inflate(inflater, container, false)
 
-    // ViewBinding setup
-    private var _binding: FragmentCocktailDetailsBinding? = null
+    private val ingredientAdapter by lazy { IngredientAdapter() }
+    private val instructionAdapter by lazy { InstructionAdapter() }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCocktailDetailsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun initViews() {
         setupToolbar()
-        observeState()
-        
+
+        binding.rvIngredients.adapter = ingredientAdapter
+        binding.rvInstructions.adapter = instructionAdapter
+
         binding.fabFavorite.setOnClickListener {
             viewModel.toggleFavorite()
         }
@@ -69,10 +59,6 @@ class CocktailDetailsFragment : BaseFragment<FragmentCocktailDetailsBinding, Coc
 
                 viewModel.state.collect { state ->
 
-                    // 1. Handle Loading State
-                    // (Omitted progress bar for layout simplicity)
-
-                    // 2. Handle Success State
                     binding.fabFavorite.setImageResource(R.drawable.favorite)
                     binding.fabFavorite.imageTintList = android.content.res.ColorStateList.valueOf(
                         if (state.isFavorite) android.graphics.Color.parseColor("#FF4081") // Pink
@@ -81,40 +67,16 @@ class CocktailDetailsFragment : BaseFragment<FragmentCocktailDetailsBinding, Coc
 
                     state.cocktail?.let { cocktail ->
 
-                        // Bind the data object to the XML layout variables
                         binding.cocktail = cocktail
 
-                        // Load the beautiful header image using Glide
                         Glide.with(this@CocktailDetailsFragment)
                             .load(cocktail.imageUrl)
                             .centerCrop()
                             .into(binding.ivHeaderImage)
 
-                        // Inflate Ingredients
-                        binding.llIngredientsContainer.removeAllViews()
-                        cocktail.ingredients.forEach { ingredient ->
-                            val itemBinding = ItemIngredientBinding.inflate(
-                                LayoutInflater.from(requireContext()), 
-                                binding.llIngredientsContainer, 
-                                false
-                            )
-                            itemBinding.tvMeasure.text = ingredient.measure
-                            itemBinding.tvIngredientName.text = ingredient.name
-                            binding.llIngredientsContainer.addView(itemBinding.root)
-                        }
-
-                        // Inflate Instructions
-                        binding.llInstructionsContainer.removeAllViews()
-                        cocktail.instructions.forEachIndexed { index, step ->
-                            val itemBinding = ItemInstructionBinding.inflate(
-                                LayoutInflater.from(requireContext()), 
-                                binding.llInstructionsContainer, 
-                                false
-                            )
-                            itemBinding.tvStepNumber.text = (index + 1).toString()
-                            itemBinding.tvInstructionText.text = step
-                            binding.llInstructionsContainer.addView(itemBinding.root)
-                        }
+                        // Update Adapters
+                        ingredientAdapter.submitList(cocktail.ingredients)
+                        instructionAdapter.submitList(cocktail.instructions)
                     }
 
                     // 3. Handle Error State
@@ -126,8 +88,5 @@ class CocktailDetailsFragment : BaseFragment<FragmentCocktailDetailsBinding, Coc
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null // Prevent memory leaks!
-    }
+
 }

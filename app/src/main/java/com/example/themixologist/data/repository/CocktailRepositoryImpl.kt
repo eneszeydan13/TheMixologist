@@ -4,6 +4,7 @@ import com.example.themixologist.core.util.Resource
 import com.example.themixologist.data.mapper.toDomain
 import com.example.themixologist.data.remote.CocktailApi
 import com.example.themixologist.domain.model.Cocktail
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -23,8 +24,8 @@ class CocktailRepositoryImpl @Inject constructor(
 
             emit(Resource.Success(cleanList))
         } catch (e: Exception) {
+            if (e is CancellationException) throw e
             emit(Resource.Error(e.message ?: "Unknown error"))
-
         }
     }
 
@@ -40,6 +41,7 @@ class CocktailRepositoryImpl @Inject constructor(
                 emit(Resource.Error("Cocktail not found"))
             }
         } catch (e: Exception) {
+            if (e is CancellationException) throw e
             emit(Resource.Error("Network error: ${e.localizedMessage}"))
         }
     }
