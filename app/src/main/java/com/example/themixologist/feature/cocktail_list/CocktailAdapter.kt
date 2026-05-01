@@ -21,11 +21,6 @@ class CocktailAdapter(
             // Pass the data object to the XML
             binding.cocktail = cocktail
 
-            // Manual image loading (or use BindingAdapter for cleaner code)
-            Glide.with(itemView)
-                .load(cocktail.imageUrl)
-                .into(binding.ivCocktail)
-
             binding.root.setOnClickListener { onItemClick(cocktail) }
 
             // Forces the data binding to execute immediately
