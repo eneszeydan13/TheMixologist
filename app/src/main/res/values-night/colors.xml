@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FF000000</color>
+    <color name="titleColor">#F8FAFC</color>
+    <color name="subtitleColor">#CBD5E1</color>
+    <color name="descColor">#94A3B8</color>
+    
+    <!-- Original Dark Details Colors -->
+    <color name="details_bg">#151B1F</color>
+    <color name="details_title">#FFFFFF</color>
+    <color name="details_subtitle">#B0BEC5</color>
+    <color name="details_section_title">#90A4AE</color>
+    <color name="badge_bg">#1C323B</color>
+    <color name="badge_text">#20A0CA</color>
+    <color name="divider_color">#273238</color>
+    <color name="fab_bg">#13B6EC</color>
+    <color name="item_measure">#FFFFFF</color>
+    <color name="item_ingredient">#B0BEC5</color>
+    <color name="item_instruction">#CFD8DC</color>
+</resources>

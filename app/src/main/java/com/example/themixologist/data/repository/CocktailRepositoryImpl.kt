@@ -13,7 +13,7 @@ class CocktailRepositoryImpl @Inject constructor(
 ) : CocktailRepository {
 
     override fun getCocktails(query: String): Flow<Resource<List<Cocktail>>> = flow {
-        emit(Resource.Loading(true))
+        emit(Resource.Loading())
         try {
             val response = api.searchCocktails(query)
 
@@ -25,6 +25,22 @@ class CocktailRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Unknown error"))
 
+        }
+    }
+
+    override fun getCocktailDetails(id: String): Flow<Resource<Cocktail>> = flow {
+        emit(Resource.Loading())
+        try {
+            val response = api.lookupCocktailById(id)
+            val dto = response.drinks.firstOrNull() // Get the first result
+
+            if (dto != null) {
+                emit(Resource.Success(dto.toDomain()))
+            } else {
+                emit(Resource.Error("Cocktail not found"))
+            }
+        } catch (e: Exception) {
+            emit(Resource.Error("Network error: ${e.localizedMessage}"))
         }
     }
 

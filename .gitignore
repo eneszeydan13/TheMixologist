@@ -1,15 +1,21 @@
 *.iml
 .gradle
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
 local.properties
+.idea/
+# Keystore files (Security)
+*.jks
+*.keystore
+keystore.properties
+
+# Kotlin/KSP/Kapt caches
+.kotlin_dir/
+.kotlin_module
+
+# Google Services (if applicable later)
+google-services.json

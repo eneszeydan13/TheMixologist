@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface CocktailRepository {
     fun getCocktails(query: String): Flow<Resource<List<Cocktail>>>
+
+    fun getCocktailDetails(id: String): Flow<Resource<Cocktail>>
 }

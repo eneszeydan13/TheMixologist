@@ -12,6 +12,8 @@ data class CocktailDto(
     @SerializedName("strDrink") val name: String?,
     @SerializedName("strDrinkThumb") val thumbUrl: String?,
     @SerializedName("strCategory") val category: String?,
+    @SerializedName("strAlcoholic") val alcoholic: String?,
+    @SerializedName("strGlass") val glass: String?,
     @SerializedName("strInstructions") val instructions: String?,
     //Messy data from api
     @SerializedName("strIngredient1") val strIngredient1: String?,

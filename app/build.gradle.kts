@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.navigation.safeargs.kotlin)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
+    kotlin("kapt")
 }
 
 android {
@@ -34,6 +38,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        dataBinding = true
         viewBinding = true
     }
 }
@@ -48,7 +53,13 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.gson.lib)
     implementation(libs.bundles.retrofit)
-    implementation(libs.bundles.hilt)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation(libs.glide.lib)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.bundles.hilt.testing)

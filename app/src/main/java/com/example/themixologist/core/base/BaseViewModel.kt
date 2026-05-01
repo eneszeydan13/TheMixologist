@@ -1,3 +1,5 @@
+package com.example.themixologist.core.base
+
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
