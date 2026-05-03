@@ -25,9 +25,10 @@ private val LightColorScheme = lightColorScheme(
     onSurface = TitleColorLight,
     surfaceVariant = BadgeBgLight,
     onSurfaceVariant = BadgeTextLight,
-    error = FavoriteActiveLight,
+    tertiary = FavoriteActiveLight,
     outline = DividerLight,
-    outlineVariant = SubtitleColorLight
+    outlineVariant = SubtitleColorLight,
+    secondary = DescColorLight
 )
 
 private val DarkColorScheme = darkColorScheme(
@@ -39,9 +40,10 @@ private val DarkColorScheme = darkColorScheme(
     onSurface = TitleColorDark,
     surfaceVariant = BadgeBgDark,
     onSurfaceVariant = BadgeTextDark,
-    error = FavoriteActiveDark,
+    tertiary = FavoriteActiveDark,
     outline = DividerDark,
-    outlineVariant = SubtitleColorDark
+    outlineVariant = SubtitleColorDark,
+    secondary = DescColorDark
 )
 
 @Composable

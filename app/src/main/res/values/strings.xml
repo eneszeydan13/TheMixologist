@@ -18,4 +18,8 @@
     <string name="unknown_error">Unknown error</string>
     <string name="cocktail_not_found">Cocktail not found</string>
     <string name="network_error_format">Network error: %1$s</string>
+    <string name="search_cocktails">Search for a cocktail…</string>
+    <string name="content_desc_favorite">Favorite</string>
+    <string name="content_desc_back">Back</string>
+    <string name="content_desc_share">Share</string>
 </resources>

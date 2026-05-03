@@ -39,7 +39,7 @@ fun SettingsScreen(
                 .padding(16.dp)
         ) {
             Text(
-                text = stringResource(id = R.string.choose_theme),
+                text = stringResource(id = R.string.theme_settings),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
@@ -47,13 +47,13 @@ fun SettingsScreen(
             )
 
             ThemeOptionRow(
-                text = stringResource(id = R.string.light_theme),
+                text = stringResource(id = R.string.light_mode),
                 selected = themeMode == AppCompatDelegate.MODE_NIGHT_NO,
                 onClick = { viewModel.updateTheme(AppCompatDelegate.MODE_NIGHT_NO) }
             )
             
             ThemeOptionRow(
-                text = stringResource(id = R.string.dark_theme),
+                text = stringResource(id = R.string.dark_mode),
                 selected = themeMode == AppCompatDelegate.MODE_NIGHT_YES,
                 onClick = { viewModel.updateTheme(AppCompatDelegate.MODE_NIGHT_YES) }
             )

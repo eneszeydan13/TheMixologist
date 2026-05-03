@@ -25,3 +25,7 @@ val FabBgDark = Color(0xFF13B6EC)
 
 val FavoriteActiveLight = Color(0xFFFF4081)
 val FavoriteActiveDark = Color(0xFFFF80AB)
+
+val IconBgOverlay = Color(0x4D000000)
+val IconColorWhite = Color.White
+val TransparentColor = Color.Transparent
