@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,20 +24,32 @@ import com.example.themixologist.feature.cocktail_details.CocktailDetailsScreen
 import com.example.themixologist.feature.cocktail_list.CocktailListScreen
 import com.example.themixologist.feature.favorites.FavoritesScreen
 import com.example.themixologist.feature.settings.SettingsScreen
+import kotlinx.serialization.Serializable
 
-sealed class Screen(val route: String, val title: String, val icon: ImageVector?) {
-    object CocktailList : Screen("cocktail_list", "Cocktails", Icons.Default.List)
-    object Favorites : Screen("favorites", "Favorites", Icons.Default.Favorite)
-    object Settings : Screen("settings", "Settings", Icons.Default.Settings)
-    object CocktailDetail : Screen("cocktail_detail/{cocktailId}", "Detail", null) {
-        fun createRoute(cocktailId: String) = "cocktail_detail/$cocktailId"
-    }
+sealed interface Screen {
+    @Serializable
+    data object CocktailList : Screen
+    
+    @Serializable
+    data object Favorites : Screen
+    
+    @Serializable
+    data object Settings : Screen
+    
+    @Serializable
+    data class CocktailDetail(val cocktailId: String) : Screen
 }
 
+data class BottomNavItem(
+    val screen: Screen,
+    val title: String,
+    val icon: ImageVector
+)
+
 val bottomNavItems = listOf(
-    Screen.CocktailList,
-    Screen.Favorites,
-    Screen.Settings
+    BottomNavItem(Screen.CocktailList, "Cocktails", Icons.Default.List),
+    BottomNavItem(Screen.Favorites, "Favorites", Icons.Default.Favorite),
+    BottomNavItem(Screen.Settings, "Settings", Icons.Default.Settings)
 )
 
 @Composable
@@ -48,17 +60,27 @@ fun MixologistNavHost() {
         bottomBar = {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
-            val isBottomBarVisible = bottomNavItems.any { it.route == currentDestination?.route }
+
+            val isBottomBarVisible = currentDestination?.hasRoute<Screen.CocktailList>() == true ||
+                                     currentDestination?.hasRoute<Screen.Favorites>() == true ||
+                                     currentDestination?.hasRoute<Screen.Settings>() == true
 
             if (isBottomBarVisible) {
                 NavigationBar {
-                    bottomNavItems.forEach { screen ->
+                    bottomNavItems.forEach { item ->
+                        val isSelected = when (item.screen) {
+                            Screen.CocktailList -> currentDestination?.hasRoute<Screen.CocktailList>() == true
+                            Screen.Favorites -> currentDestination?.hasRoute<Screen.Favorites>() == true
+                            Screen.Settings -> currentDestination?.hasRoute<Screen.Settings>() == true
+                            else -> false
+                        }
+                        
                         NavigationBarItem(
-                            icon = { screen.icon?.let { Icon(it, contentDescription = screen.title) } },
-                            label = { Text(screen.title) },
-                            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                            icon = { Icon(item.icon, contentDescription = item.title) },
+                            label = { Text(item.title) },
+                            selected = isSelected,
                             onClick = {
-                                navController.navigate(screen.route) {
+                                navController.navigate(item.screen) {
                                     popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
                                     }
@@ -74,28 +96,27 @@ fun MixologistNavHost() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.CocktailList.route,
+            startDestination = Screen.CocktailList,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.CocktailList.route) {
+            composable<Screen.CocktailList> {
                 CocktailListScreen(
                     onNavigateToDetail = { cocktailId ->
-                        navController.navigate(Screen.CocktailDetail.createRoute(cocktailId))
+                        navController.navigate(Screen.CocktailDetail(cocktailId))
                     }
                 )
             }
-            composable(Screen.Favorites.route) {
+            composable<Screen.Favorites> {
                 FavoritesScreen(
                     onNavigateToDetail = { cocktailId ->
-                        navController.navigate(Screen.CocktailDetail.createRoute(cocktailId))
+                        navController.navigate(Screen.CocktailDetail(cocktailId))
                     }
                 )
             }
-            composable(Screen.Settings.route) {
+            composable<Screen.Settings> {
                 SettingsScreen()
             }
-            composable(Screen.CocktailDetail.route) { backStackEntry ->
-                val cocktailId = backStackEntry.arguments?.getString("cocktailId") ?: ""
+            composable<Screen.CocktailDetail> {
                 CocktailDetailsScreen(
                     onNavigateUp = { navController.navigateUp() }
                 )

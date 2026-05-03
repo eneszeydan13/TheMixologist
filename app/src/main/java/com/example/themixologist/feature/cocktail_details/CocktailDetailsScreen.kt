@@ -192,20 +192,6 @@ fun CocktailDetailsScreen(
                     )
                 }
             },
-            actions = {
-                IconButton(
-                    onClick = { /* Share action */ },
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .background(IconBgOverlay, CircleShape)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Share,
-                        contentDescription = stringResource(id = R.string.content_desc_share),
-                        tint = IconColorWhite
-                    )
-                }
-            },
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = TransparentColor,
                 scrolledContainerColor = TransparentColor

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.themixologist.core.theme.Dimens
 import com.example.themixologist.domain.model.Ingredient
 
 @Composable
@@ -21,13 +22,13 @@ fun IngredientRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp)
+            .padding(vertical = Dimens.RadiusMedium)
     ) {
         Text(
             text = ingredient.measure,
             modifier = Modifier
-                .width(80.dp)
-                .padding(end = 16.dp),
+                .width(Dimens.IngredientWidth)
+                .padding(end = Dimens.SpaceMedium),
             textAlign = TextAlign.End,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold,

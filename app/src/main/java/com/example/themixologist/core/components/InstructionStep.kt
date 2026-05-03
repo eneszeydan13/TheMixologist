@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.themixologist.core.theme.Dimens
 
 @Composable
 fun InstructionStep(
@@ -25,12 +26,12 @@ fun InstructionStep(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp)
+            .padding(vertical = Dimens.SpaceMedium)
     ) {
         Box(
             modifier = Modifier
-                .padding(top = 2.dp, end = 16.dp)
-                .size(28.dp)
+                .padding(top = Dimens.SpaceExtraSmall, end = Dimens.SpaceMedium)
+                .size(Dimens.BadgeSize)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center

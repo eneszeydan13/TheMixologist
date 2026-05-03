@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.themixologist.core.theme.Dimens
 import coil.compose.AsyncImage
 import com.example.themixologist.domain.model.Cocktail
 
@@ -27,10 +28,10 @@ fun CocktailCard(
 ) {
     Card(
         modifier = modifier
-            .padding(8.dp)
+            .padding(Dimens.SpaceSmall)
             .clickable { onClick() },
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(Dimens.RadiusMedium),
+        elevation = CardDefaults.cardElevation(defaultElevation = Dimens.ElevationDefault),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
@@ -50,7 +51,7 @@ fun CocktailCard(
             
             Text(
                 text = cocktail.name,
-                modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 8.dp),
+                modifier = Modifier.padding(start = Dimens.RadiusMedium, end = Dimens.RadiusMedium, top = Dimens.SpaceSmall),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
@@ -58,7 +59,7 @@ fun CocktailCard(
             
             Text(
                 text = cocktail.category,
-                modifier = Modifier.padding(bottom = 12.dp, top = 2.dp),
+                modifier = Modifier.padding(bottom = Dimens.RadiusMedium, top = Dimens.SpaceExtraSmall),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.outline
             )

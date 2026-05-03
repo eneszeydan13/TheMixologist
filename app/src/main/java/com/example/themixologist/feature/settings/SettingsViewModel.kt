@@ -15,13 +15,9 @@ class SettingsViewModel @Inject constructor(
     private val themePreferences: ThemePreferences
 ) : BaseViewModel() {
 
-    private val _themeMode = MutableStateFlow(themePreferences.themeMode)
-    val themeMode: StateFlow<Int> = _themeMode.asStateFlow()
+    val themeMode: StateFlow<Int> = themePreferences.themeModeFlow
 
     fun updateTheme(mode: Int) {
-        viewModelScope.launch {
-            themePreferences.themeMode = mode
-            _themeMode.value = mode
-        }
+        themePreferences.themeMode = mode
     }
 }

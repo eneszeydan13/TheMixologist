@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.themixologist.core.theme.Dimens
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.themixologist.R
@@ -36,14 +37,14 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp)
+                .padding(Dimens.SpaceMedium)
         ) {
             Text(
                 text = stringResource(id = R.string.theme_settings),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = Dimens.SpaceMedium)
             )
 
             ThemeOptionRow(
@@ -81,7 +82,7 @@ private fun ThemeOptionRow(
             selected = selected,
             onClick = onClick
         )
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(Dimens.SpaceSmall))
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge,
