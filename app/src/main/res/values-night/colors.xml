@@ -18,4 +18,8 @@
     <color name="item_measure">#FFFFFF</color>
     <color name="item_ingredient">#B0BEC5</color>
     <color name="item_instruction">#CFD8DC</color>
+    
+    <!-- Favorite Icon Colors -->
+    <color name="favorite_active">#FF80AB</color> <!-- Lighter pink for dark mode contrast -->
+    <color name="favorite_inactive">#FFFFFF</color>
 </resources>

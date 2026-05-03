@@ -23,7 +23,6 @@ class CocktailDetailsViewModel @Inject constructor(
     data class UiState(
         val isLoading: Boolean = false,
         val cocktail: Cocktail? = null,
-        val error: String? = null,
         val isFavorite: Boolean = false
     )
 
@@ -55,8 +54,10 @@ class CocktailDetailsViewModel @Inject constructor(
                     is Resource.Loading -> _state.value = _state.value.copy(isLoading = true)
                     is Resource.Success -> _state.value =
                         _state.value.copy(isLoading = false, cocktail = result.data)
-                    is Resource.Error -> _state.value =
-                        _state.value.copy(isLoading = false, error = result.message)
+                    is Resource.Error -> {
+                        _state.value = _state.value.copy(isLoading = false)
+                        sendEvent(UiEvent.ShowSnackbar(result.message ?: "Unknown error"))
+                    }
                 }
             }
         }

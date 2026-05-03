@@ -35,11 +35,13 @@ class CocktailListFragment : BaseFragment<FragmentCocktailListBinding, CocktailL
 
         binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { viewModel.search(it) }
                 binding.searchView.clearFocus()
                 return true
             }
-            override fun onQueryTextChange(newText: String?) = false
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { viewModel.search(it) }
+                return true
+            }
         })
     }
 

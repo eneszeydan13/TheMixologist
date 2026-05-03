@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.themixologist.R
 import com.example.themixologist.core.base.BaseFragment
+import com.example.themixologist.core.base.BaseViewModel.UiEvent
 import com.example.themixologist.databinding.FragmentCocktailDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -61,8 +62,11 @@ class CocktailDetailsFragment :
 
                     binding.fabFavorite.setImageResource(R.drawable.favorite)
                     binding.fabFavorite.imageTintList = android.content.res.ColorStateList.valueOf(
-                        if (state.isFavorite) android.graphics.Color.parseColor("#FF4081") // Pink
-                        else android.graphics.Color.parseColor("#000000") // Default Black
+                        androidx.core.content.ContextCompat.getColor(
+                            requireContext(),
+                            if (state.isFavorite) R.color.favorite_active
+                            else R.color.favorite_inactive
+                        )
                     )
 
                     state.cocktail?.let { cocktail ->
@@ -79,14 +83,23 @@ class CocktailDetailsFragment :
                         instructionAdapter.submitList(cocktail.instructions)
                     }
 
-                    // 3. Handle Error State
-                    if (state.error != null) {
-                        Toast.makeText(requireContext(), state.error, Toast.LENGTH_LONG).show()
+
+                }
+            }
+        }
+
+        // Collect One-Time Side Effects (like Toasts)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiEvent.collect { event ->
+                    when (event) {
+                        is UiEvent.ShowSnackbar -> {
+                            Toast.makeText(requireContext(), event.message, Toast.LENGTH_LONG).show()
+                        }
+                        else -> Unit
                     }
                 }
             }
         }
     }
-
-
 }
